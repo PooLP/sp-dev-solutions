@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version, Environment, Text, EnvironmentType } from '@microsoft/sp-core-library';
+import { Environment, Text, EnvironmentType } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -55,14 +55,14 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
     let inputValue = this.properties.defaultQueryKeywords.tryGetValue();
 
     if (inputValue && typeof(inputValue) === 'string') {
-      
+
       // Notify subsscriber a new value if available
       this.context.dynamicDataSourceManager.notifyPropertyChanged('searchQuery');
       this._searchQuery.rawInputValue = inputValue;
     }
-    
+
     const element: React.ReactElement<ISearchBoxContainerProps> = React.createElement(
-      SearchBoxContainer, { 
+      SearchBoxContainer, {
         onSearch: this._onSearch,
         searchInNewPage: this.properties.searchInNewPage,
         pageUrl: this.properties.pageUrl,
@@ -103,7 +103,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
       switch (propertyId) {
 
           case 'searchQuery':
-          
+
               const annotatedPropertyValue = {
                   sampleValue: {
                       'rawInputValue': "*",
@@ -127,7 +127,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
    * @param propertyId ID of the dynamic data set to retrieve the value for
    */
   public getPropertyValue(propertyId: string) {
-        
+
     switch (propertyId) {
 
         case 'searchQuery':
@@ -142,7 +142,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
 
     this._serviceHelper = new ServiceHelper(this.context.httpClient);
     this.context.dynamicDataSourceManager.initializeSource(this);
-    
+
     this.initSearchService();
     this.initNlpService();
 
@@ -153,10 +153,6 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
-  }
-
-  protected get dataVersion(): Version {
-    return Version.parse('1.0');
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -211,17 +207,17 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
    * Verifies if the string is a correct URL
    * @param value the URL to verify
    */
-  private _validatePageUrl(value: string) {    
-    
+  private _validatePageUrl(value: string) {
+
     if ((!/^(https?):\/\/[^\s/$.?#].[^\s]*/.test(value) || !value) && this.properties.searchInNewPage) {
       return strings.SearchBoxUrlErrorMessage;
     }
-    
+
     return '';
   }
 
   /**
-   * Ensures the service URL is valid 
+   * Ensures the service URL is valid
    * @param value the service URL
    */
   private async _validateServiceUrl(value: string) {
@@ -246,12 +242,12 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
    * Initializes the query suggestions data provider instance according to the current environnement
    */
   private initSearchService() {
-      
+
       if (this.properties.enableQuerySuggestions) {
         if (Environment.type === EnvironmentType.Local ) {
           this._searchService = new MockSearchService();
         } else {
-          this._searchService = new SearchService(this.context);        
+          this._searchService = new SearchService(this.context);
         return "";
       }
     }
@@ -284,7 +280,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
    * Determines the group fields for the search query options inside the property pane
    */
   private _getSearchQueryFields(): IPropertyPaneField<any>[] {
-      
+
     // Sets up search query fields
     let searchQueryConfigFields: IPropertyPaneField<any>[] = [
         PropertyPaneCheckbox('useDynamicDataSource', {
@@ -301,7 +297,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
             PropertyPaneDynamicField('defaultQueryKeywords', {
               label: strings.DynamicData.DefaultQueryKeywordsPropertyLabel,
             })
-          ],          
+          ],
           sharedConfiguration: {
             depth: DynamicDataSharedDepth.Source,
           }
@@ -406,7 +402,7 @@ export default class SearchBoxWebPart extends BaseClientSideWebPart<ISearchBoxWe
             // Manually subscribe to hash change since the default property doesn't
             window.addEventListener('hashchange', this.render);
         } else {
-            window.removeEventListener('hashchange', this.render); 
+            window.removeEventListener('hashchange', this.render);
         }
     }
   }

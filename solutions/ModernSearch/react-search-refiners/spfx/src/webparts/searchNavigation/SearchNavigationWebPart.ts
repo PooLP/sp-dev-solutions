@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
 import { DynamicProperty } from '@microsoft/sp-component-base';
 import {
     BaseClientSideWebPart,
@@ -86,10 +85,6 @@ export default class SearchNavigationWebPart extends BaseClientSideWebPart<ISear
         }
 
         return super.onInit();
-    }
-
-    protected get dataVersion(): Version {
-        return Version.parse('1.0');
     }
 
     protected async loadPropertyPaneResources(): Promise<void> {

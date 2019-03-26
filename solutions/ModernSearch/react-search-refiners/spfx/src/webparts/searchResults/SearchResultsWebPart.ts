@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version, Text, Environment, EnvironmentType, DisplayMode, Log } from '@microsoft/sp-core-library';
+import { Text, Environment, EnvironmentType, DisplayMode, Log } from '@microsoft/sp-core-library';
 import {
     BaseClientSideWebPart,
     IPropertyPaneConfiguration,
@@ -257,10 +257,6 @@ export default class SearchResultsWebPart extends BaseClientSideWebPart<ISearchR
         ReactDom.unmountComponentAtNode(this.domElement);
     }
 
-    protected get dataVersion(): Version {
-        return Version.parse('1.0');
-    }
-
     /**
      * Initializes the Web Part required properties if there are not present in the manifest (i.e. during an update scenario)
      */
@@ -423,7 +419,7 @@ export default class SearchResultsWebPart extends BaseClientSideWebPart<ISearchR
     }
 
     /**
-    * Save the useful information for the connected data source. 
+    * Save the useful information for the connected data source.
     * They will be used to get the value of the dynamic property if this one fails.
     */
     private _saveDataSourceInfo() {
@@ -504,7 +500,7 @@ export default class SearchResultsWebPart extends BaseClientSideWebPart<ISearchR
                 break;
         }
 
-        // Register result types inside the template      
+        // Register result types inside the template
         this._templateService.registerResultTypes(this.properties.resultTypes);
 
         this._templateContentToDisplay = templateContent;
@@ -805,7 +801,7 @@ export default class SearchResultsWebPart extends BaseClientSideWebPart<ISearchR
      */
     private _getStylingFields(): IPropertyPaneField<any>[] {
 
-        // Options for the search results layout 
+        // Options for the search results layout
         const layoutOptions = [
             {
                 iconProps: {
